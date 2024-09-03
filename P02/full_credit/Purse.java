@@ -1,22 +1,19 @@
 public class Purse {
 	public static void main(String[] args) {
-		Coins[] coins =
- 	{
-			new Coin(Denomination.Penny, 2015)	
-			new Coin(Denomination.Nickel, 2014),
-			new Coin(Denomination.Dime, 1990),		
-			new Coin(Denomination.Quarter, 2008)
-			new Coin(Denomination.Dime, 1982)
+		Coins[] coins = {
+ 	
+		new Coin(Denomination.Penny, 2015),	
+		new Coin(Denomination.Nickel, 2014),
+		new Coin(Denomination.Dime, 1990),	
+		new Coin(Denomination.Quarter, 2008),
+		new Coin(Denomination.Dime, 1982)
 	};
-
 	
-
 
 		double totalValue = 0;
 		int earliestYear = Integer.MAX_VALUE;
 		int latestYear = Integrer.MIN_VALUE;
 	
-
 
 		for (Coin coin : coins) {
         	    totalValue += coin.getValue();
