@@ -7,5 +7,27 @@ public class Purse {
 			new Coin(Denomination.Dime, 1990),		
 			new Coin(Denomination.Quarter, 2008)
 			new Coin(Denomination.Dime, 1982)
-	
 	};
+
+	
+
+
+
+
+
+//for loop part
+
+
+		for (Coin coin : coins) {
+        	    totalValue += coin.getValue();
+           	 if (coin.getYear() < earliestYear) {
+              	  earliestYear = coin.getYear();
+	}
+           
+		 if (coin.getYear() > latestYear) {
+                latestYear = coin.getYear();
+
+    	    }
+   
+
+	}
