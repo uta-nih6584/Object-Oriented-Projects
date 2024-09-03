@@ -6,7 +6,19 @@ public enum Denomination {
 
     private final double value;
 
-    // adding the constructor to my pre-exisitng code
-    private Denomination(double value) {
+	 private Denomination(double value) {
         this.value = value;
-    
+}    
+
+	public double getValue() {
+		return value;
+
+}
+
+	@Override
+	public String toString() {
+		return name();
+
+	}
+
+}
