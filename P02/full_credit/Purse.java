@@ -12,10 +12,10 @@ public class Purse {
 	
 
 
-
-
-
-//for loop part
+		double totalValue = 0;
+		int earliestYear = Integer.MAX_VALUE;
+		int latestYear = Integrer.MIN_VALUE;
+	
 
 
 		for (Coin coin : coins) {
@@ -31,3 +31,6 @@ public class Purse {
    
 
 	}
+
+
+
