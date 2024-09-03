@@ -3,7 +3,7 @@ public class Purse {
 		Coins[] coins =
  	{
 			new Coin(Denomination.Penny, 2015)	
-			new Coin(Denomination.Nickle, 2014),
+			new Coin(Denomination.Nickel, 2014),
 			new Coin(Denomination.Dime, 1990),		
 			new Coin(Denomination.Quarter, 2008)
 			new Coin(Denomination.Dime, 1982)
@@ -33,9 +33,10 @@ public class Purse {
 	}
 
 	
-	System.out.printf("You have $ %2f in coins between %d and %d,
+	System.out.printf("You have $ %.2f in coins between %d and %d%n,
 			   totalValue, earliestYear, latestYear);
 
 
-}
+	}	
 
+}
