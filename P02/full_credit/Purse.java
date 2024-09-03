@@ -26,10 +26,8 @@ public class Purse {
     	    }   
 
 	}
-
 	
 	System.out.printf("You have $ %.2f in coins between %d and %d%n", totalValue, earliestYear, latestYear);
-
 
 	}	
 
