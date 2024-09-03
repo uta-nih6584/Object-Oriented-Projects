@@ -1,6 +1,6 @@
 public class Purse {
 	public static void main(String[] args) {
-		Coins[] coins = {
+		Coin[] coins = {
  	
 		new Coin(Denomination.Penny, 2015),	
 		new Coin(Denomination.Nickel, 2014),
@@ -12,7 +12,7 @@ public class Purse {
 
 		double totalValue = 0;
 		int earliestYear = Integer.MAX_VALUE;
-		int latestYear = Integrer.MIN_VALUE;
+		int latestYear = Integer.MIN_VALUE;
 	
 
 		for (Coin coin : coins) {
