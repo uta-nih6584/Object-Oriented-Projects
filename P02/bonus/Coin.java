@@ -17,3 +17,9 @@ public double getValue() {
         return year;
 
     }
+
+@Override
+    public String toString() {
+        return String.format("%d %s", year, denomination);
+    }
+}
