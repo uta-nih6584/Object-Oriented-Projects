@@ -1,16 +1,37 @@
 public class TestMedia {
     public static void main(String[] args) {
-        Media media = new Media("The Little Shop of Horrors", "https://publicdomainmovie.net/movie/the-little-shop-of-horrors-0");
+        int failureCount = 0;
 
-        if (!media.toString().equals("The Little Shop of Horrors (https://publicdomainmovie.net/movie/the-little-shop-of-horrors-0)")) {
-            System.err.println("FAIL: Expected 'The Little Shop of Horrors (https://publicdomainmovie.net/movie/the-little-shop-of-horrors-0)' but got '" + media.toString() + "'");
+        try {
+            Media media1 = new Media("YouTube Video", "https://youtube.com");
+        } catch (RuntimeException e) {
+            System.err.println("FAIL: Valid URL failed validation: https://youtube.com");
+            failureCount++;
         }
 
-        Media media2 = new Media("Public Domain Film", "https://example.com/film");
-
-        if (!media2.toString().equals("Public Domain Film (https://example.com/film)")) {
-            System.err.println("FAIL: Expected 'Public Domain Film (https://example.com/film)' but got '" + media2.toString() + "'");
+        try {
+            Media media2 = new Media("Library Media", "file://media/lib/garp.mp4");
+        } catch (RuntimeException e) {
+            System.err.println("FAIL: Valid URL failed validation: file://media/lib/garp.mp4");
+            failureCount++;
         }
+
+        String[] invalidUrls = {
+            "hello.world",
+            "htt://badurl.com",
+            "flub://badurl.com"
+        };
+
+        for (String url : invalidUrls) {
+            try {
+                new Media("Test Media", url);
+                System.err.println("FAIL: Invalid URL accepted: " + url);
+                failureCount++;
+            } catch (RuntimeException e) {
+            }
+        }
+
+        System.exit(failureCount);
     }
 }
 
