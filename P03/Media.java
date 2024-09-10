@@ -1,4 +1,4 @@
-public Class Media {	
+public class Media {	
 	private String title;
 	private String url;
 
