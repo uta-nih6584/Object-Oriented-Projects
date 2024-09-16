@@ -1,5 +1,3 @@
-package customer;
-
 public class Student {
     private String name;
     private int id;
@@ -25,4 +23,3 @@ public class Student {
         return name + " (" + id + ", " + email + ", Account #" + account.getAccountNumber() + ")";
     }
 }
-
