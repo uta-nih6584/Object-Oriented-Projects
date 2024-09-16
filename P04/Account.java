@@ -1,5 +1,3 @@
-package customer;
-
 public class Account {
 	public static int nextAccountNumber = 1;
 	private int accountNumber;
@@ -16,4 +14,5 @@ public class Account {
         return "Playing " + media.toString();
     }
 }
+
 
