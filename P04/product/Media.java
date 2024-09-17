@@ -3,7 +3,7 @@ package product;
 /**
  * Represents a media item with a title, URL, and associated points.
  * 
- * @author ##YOUR NAME##
+ * @author ##Najat Hussein##
  * @version 0.2
  * @since 1.0
  */
