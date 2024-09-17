@@ -1,7 +1,7 @@
 package test;
-import product.Media;
 
 import customer.Student;
+import product.Media;
 
 public class TestStudent {
     public static void main(String[] args) {
@@ -14,11 +14,11 @@ public class TestStudent {
         }
 
         try {
-            Student student2 = new Student("Sarah Al-Noubani", 10005678, "str1214@mavs.uta.edu");
+            Student student2 = new Student("Sarah Al-Noubani", 10005678, "str1214@gmail.com");
             System.err.println("FAIL: No exception thrown for non-UTA email");
             failureCount++;
         } catch (IllegalArgumentException e) {
-            if (!e.getMessage().equals("Non-UTA email address: str1214@mavs.uta.edu")) {
+            if (!e.getMessage().equals("Non-UTA email address: str1214@gmail.com")) {
                 System.err.println("FAIL: Incorrect exception message: " + e.getMessage());
                 failureCount++;
             }

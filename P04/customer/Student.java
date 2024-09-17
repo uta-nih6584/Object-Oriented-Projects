@@ -1,4 +1,5 @@
 package customer;
+
 import product.Media;
 
 public class Student {
@@ -8,13 +9,17 @@ public class Student {
     private Account account;
 
     public Student(String name, int id, String email) {
-        if (!email.endsWith("@uta.edu") && !email.endsWith("@mavs.uta.edu")) {
+        if (!isValidUTAEmail(email)) {
             throw new IllegalArgumentException("Non-UTA email address: " + email);
         }
         this.name = name;
         this.id = id;
         this.email = email;
         this.account = new Account();
+    }
+
+    private boolean isValidUTAEmail(String email) {
+        return email.matches("[a-zA-Z]{2,}[0-9]{4}@mavs\\.uta\\.edu");
     }
 
     public String requestMedia(Media media) {
@@ -26,3 +31,4 @@ public class Student {
         return name + " (" + id + ", " + email + ", Account #" + account.getAccountNumber() + ")";
     }
 }
+
