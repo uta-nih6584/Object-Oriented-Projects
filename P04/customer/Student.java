@@ -3,23 +3,24 @@ package customer;
 import product.Media;
 
 public class Student {
+    private static int nextStudentId = 1;
+    private int studentId;
     private String name;
-    private int id;
     private String email;
     private Account account;
 
     public Student(String name, int id, String email) {
-        if (!isValidUTAEmail(email)) {
-            throw new IllegalArgumentException("Non-UTA email address: " + email);
-        }
         this.name = name;
-        this.id = id;
+        this.studentId = id;
         this.email = email;
-        this.account = new Account();
+        validateEmail(email);
+        this.account = new Unlimited(); // Ensure Unlimited is used correctly
     }
 
-    private boolean isValidUTAEmail(String email) {
-        return email.matches("[a-zA-Z]{2,}[0-9]{4}@mavs\\.uta\\.edu");
+    private void validateEmail(String email) {
+        if (!email.endsWith("@mavs.uta.edu")) {
+            throw new IllegalArgumentException("Non-UTA email address: " + email);
+        }
     }
 
     public String requestMedia(Media media) {
@@ -28,7 +29,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return name + " (" + id + ", " + email + ", Account #" + account.getAccountNumber() + ")";
+        return name + " (" + studentId + ", " + email + ", Account #" + account.getAccountNumber() + ")";
     }
 }
-

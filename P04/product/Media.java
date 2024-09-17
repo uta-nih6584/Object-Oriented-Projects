@@ -3,8 +3,8 @@ package product;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Media {	
-    private String title; 
+public class Media {
+    private String title;
     private String url;
     private int points;
 
