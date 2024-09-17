@@ -7,14 +7,14 @@ public class TestMedia {
         int failureCount = 0;
 
         try {
-            Media media1 = new Media("YouTube Video", "https://youtube.com");
+            Media media1 = new Media("YouTube Video", "https://youtube.com", 5);
         } catch (RuntimeException e) {
             System.err.println("FAIL: Valid URL failed validation: https://youtube.com");
             failureCount++;
         }
 
         try {
-            Media media2 = new Media("Library Media", "file://media/lib/garp.mp4");
+            Media media2 = new Media("Library Media", "file://media/lib/garp.mp4", 10);
         } catch (RuntimeException e) {
             System.err.println("FAIL: Valid URL failed validation: file://media/lib/garp.mp4");
             failureCount++;
@@ -28,7 +28,7 @@ public class TestMedia {
 
         for (String url : invalidUrls) {
             try {
-                new Media("Test Media", url);
+                new Media("Test Media", url, 5);
                 System.err.println("FAIL: Invalid URL accepted: " + url);
                 failureCount++;
             } catch (RuntimeException e) {

@@ -28,9 +28,9 @@ public class TestStudent {
         }
 
         Student student3 = new Student("Malak Al-Noubani", 10007890, "maa1421@mavs.uta.edu");
-        Media media = new Media("Public Domain Film", "https://example.com/film");
+        Media media = new Media("Public Domain Film", "https://example.com/film", 10);
         String mediaRequestResult = student3.requestMedia(media);
-        if (!mediaRequestResult.equals("Playing Public Domain Film (https://example.com/film)")) {
+        if (!mediaRequestResult.equals("Playing Public Domain Film (https://example.com/film, 10 points)")) {
             System.err.println("FAIL: Incorrect media request result: " + mediaRequestResult);
             failureCount++;
         }
@@ -38,3 +38,4 @@ public class TestStudent {
         System.exit(failureCount);
     }
 }
+
