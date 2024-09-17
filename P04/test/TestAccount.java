@@ -1,3 +1,7 @@
+package test;
+import product.Media;
+import customer.Account;
+
 public class TestAccount {
     public static void main(String[] args) {
         Account acc1 = new Account();

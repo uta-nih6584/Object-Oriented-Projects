@@ -1,3 +1,7 @@
+package test;
+
+import product.Media;
+
 public class TestMedia {
     public static void main(String[] args) {
         int failureCount = 0;

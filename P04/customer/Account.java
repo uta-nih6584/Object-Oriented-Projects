@@ -1,3 +1,6 @@
+package customer;
+import product.Media;
+
 public class Account {
 	public static int nextAccountNumber = 1;
 	private int accountNumber;

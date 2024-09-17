@@ -1,3 +1,8 @@
+package test;
+import product.Media;
+
+import customer.Student;
+
 public class TestStudent {
     public static void main(String[] args) {
         int failureCount = 0;
