@@ -1,6 +1,6 @@
 package customer;
 
-import product.Media;
+import product.Media;  
 
 public class Alacarte extends Account {
     private int pointsRemaining;
@@ -10,7 +10,7 @@ public class Alacarte extends Account {
     }
 
     public void buyPoints(int points) {
-        pointsRemaining += points;
+        this.pointsRemaining += points;
     }
 
     public int getPointsRemaining() {
@@ -21,10 +21,9 @@ public class Alacarte extends Account {
     public String play(Media media) {
         if (pointsRemaining >= media.getPoints()) {
             pointsRemaining -= media.getPoints();
-            return "Playing " + media.toString();
+            return "Playing " + media;
         } else {
-            return "Buy more points: Requires " + media.getPoints() + " points, you have " + pointsRemaining + " points.";
+            return "Buy more points: Requires " + media.getPoints() + " points, you have " + pointsRemaining;
         }
     }
 }
-
