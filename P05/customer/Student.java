@@ -3,15 +3,16 @@ package customer;
 import product.Media;
 
 public class Student {
-    private static int nextStudentId = 1;
-    private int studentId;
-    private String name;
-    private String email;
+    private static int nextStudentId = 1; 
+    private int studentId; 
+    private String name; 
+    private String email; 
     private Account account;
 
-    public Student(String name, int id, String email) {
+    
+    public Student(String name, String email) {
         this.name = name;
-        this.studentId = id;
+        this.studentId = nextStudentId++; 
         this.email = email;
         this.account = new Unlimited(); 
     }
@@ -21,7 +22,7 @@ public class Student {
     }
 
     public Account getAccount() {
-        return account;
+        return account; 
     }
 
     @Override
