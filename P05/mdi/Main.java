@@ -6,7 +6,7 @@ import moes.Moes;
 public class Main {
     private Moes moes = new Moes();
     private Menu menu = new Menu();
-    private StringBuilder output = new StringBuilder();
+    private StringBuilder output = new StringBuilder();  
     private boolean running = true;
 
     public Main() {
@@ -27,7 +27,7 @@ public class Main {
     public void mdi() {
         while (running) {
             System.out.println(output.toString());
-            output.setLength(0);
+            output.setLength(0);  
             menu.run();
         }
     }
