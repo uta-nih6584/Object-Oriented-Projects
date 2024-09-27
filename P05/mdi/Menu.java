@@ -15,15 +15,15 @@ public class Menu {
         while (true) {
             System.out.println("\nSelect an option:");
             for (int i = 0; i < items.size(); i++) {
-                System.out.println(i + 1 + ": " + items.get(i).getTitle());
+                System.out.println(i + "] " + items.get(i).getTitle());
             }
-            System.out.println("0: Exit");
+            System.out.println(items.size() + ": Exit");  
 
             int choice = getInt("Enter your choice: ");
-            if (choice == 0) break;
+            if (choice == items.size()) break;  
 
-            if (choice > 0 && choice <= items.size()) {
-                items.get(choice - 1).run();
+            if (choice >= 0 && choice < items.size()) {
+                items.get(choice).run();
             } else {
                 System.out.println("Invalid choice, try again.");
             }
@@ -45,4 +45,3 @@ public class Menu {
         return scanner.nextInt();
     }
 }
-
