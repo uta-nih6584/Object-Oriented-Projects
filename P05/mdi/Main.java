@@ -18,17 +18,17 @@ public class Main {
     }
 
     private void initializeMenu() {
-        // Add menu items with method references
-        menu.addMenuItem(new MenuItem("Add Student", this::addStudent));
-        menu.addMenuItem(new MenuItem("List Students", this::listStudents));
-        menu.addMenuItem(new MenuItem("Add Media", this::addMedia));
-        menu.addMenuItem(new MenuItem("List Media", this::listMedia));
+        // Add menu items with method references in the desired order
+        menu.addMenuItem(new MenuItem("Exit", this::endApp));
         menu.addMenuItem(new MenuItem("Play Media", this::playMedia));
+        menu.addMenuItem(new MenuItem("List Media", this::listMedia));
         menu.addMenuItem(new MenuItem("List Available Points", this::listAvailablePoints));
         menu.addMenuItem(new MenuItem("Buy Points", this::buyPoints));
-        menu.addMenuItem(new MenuItem("Exit", this::endApp));
+        menu.addMenuItem(new MenuItem("Add Media", this::addMedia));
+        menu.addMenuItem(new MenuItem("List Students", this::listStudents));
+        menu.addMenuItem(new MenuItem("Add Student", this::addStudent));
     }
-
+    
     public void mdi() {
         boolean running = true;
         while (running) {
