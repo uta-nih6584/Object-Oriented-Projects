@@ -30,7 +30,7 @@ public class Main {
         menu.addMenuItem(new MenuItem("List Students", this::listStudents));
         menu.addMenuItem(new MenuItem("Add Student", this::addStudent));
     }
-    
+
     public void mdi() {
         boolean running = true;
         while (running) {
@@ -54,28 +54,22 @@ public class Main {
         System.out.print("Select account type (1 for Alacarte, 2 for Unlimited): ");
         int accountType = Integer.parseInt(scanner.nextLine()); // Prompt for account type
         
-    Account account;
+        Account account;
         if (accountType == 1) {
-         System.out.print("Enter initial points for Alacarte: ");
-         int points = Integer.parseInt(scanner.nextLine());
-         account = new Alacarte(points); // Create Alacarte account
-    } else {
-        account = new Unlimited(); // Create Unlimited account
-    }
-    
-    
-    // Prompt for student ID
-        System.out.print("Enter student's ID: ");
-        int studentId = Integer.parseInt(scanner.nextLine()); // Get ID from user input
+            System.out.print("Enter initial points for Alacarte: ");
+            int points = Integer.parseInt(scanner.nextLine());
+            account = new Alacarte(points); // Create Alacarte account with initial points
+        } else {
+            account = new Unlimited(); // Create Unlimited account
+        }
         
-        // Prompt for initial points
-        System.out.print("Enter initial points: ");
-        int points = Integer.parseInt(scanner.nextLine());
-
         // Create a new Student and add to Moes
-        Student student = new Student(name, studentId, email, new Alacarte(points)); // points should be int
+        Student student = new Student(name, id, email, account); // Use the account created above
         moes.addStudent(student);
-        System.out.println("Student added: [" + id + ", " + email + ", Account #" + account.getAccountNumber() + ", Points: " + (account instanceof Alacarte ? ((Alacarte) account).getPointsRemaining() : "N/A") + "]");
+        
+        // Output the added student information
+        System.out.println("Student added: [" + id + ", " + email + ", Account #" + account.getAccountNumber() + 
+                           ", Points: " + (account instanceof Alacarte ? ((Alacarte) account).getPointsRemaining() : "N/A") + "]");
     }
 
     public void listStudents() {
