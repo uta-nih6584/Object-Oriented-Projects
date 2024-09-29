@@ -1,7 +1,9 @@
 package mdi;
 
+import customer.Account;
 import customer.Alacarte; // Adjust according to your actual package structure
 import customer.Student; // Adjust according to your actual package structure
+import customer.Unlimited;
 import java.util.Scanner; // Ensure this class exists in the customer package
 import moes.Moes; // Ensure Media class exists in the product package
 import product.Media;
@@ -47,8 +49,22 @@ public class Main {
         String name = scanner.nextLine();
         System.out.print("Enter student's email: ");
         String email = scanner.nextLine();
+        System.out.print("Enter student's ID: ");
+        int id = Integer.parseInt(scanner.nextLine()); // Prompt for ID
+        System.out.print("Select account type (1 for Alacarte, 2 for Unlimited): ");
+        int accountType = Integer.parseInt(scanner.nextLine()); // Prompt for account type
         
-        // Prompt for student ID
+    Account account;
+        if (accountType == 1) {
+         System.out.print("Enter initial points for Alacarte: ");
+         int points = Integer.parseInt(scanner.nextLine());
+         account = new Alacarte(points); // Create Alacarte account
+    } else {
+        account = new Unlimited(); // Create Unlimited account
+    }
+    
+    
+    // Prompt for student ID
         System.out.print("Enter student's ID: ");
         int studentId = Integer.parseInt(scanner.nextLine()); // Get ID from user input
         
@@ -59,7 +75,7 @@ public class Main {
         // Create a new Student and add to Moes
         Student student = new Student(name, studentId, email, new Alacarte(points)); // points should be int
         moes.addStudent(student);
-        System.out.println("Student added: " + name);
+        System.out.println("Student added: [" + id + ", " + email + ", Account #" + account.getAccountNumber() + ", Points: " + (account instanceof Alacarte ? ((Alacarte) account).getPointsRemaining() : "N/A") + "]");
     }
 
     public void listStudents() {
