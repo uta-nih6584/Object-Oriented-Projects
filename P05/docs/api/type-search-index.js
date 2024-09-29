@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"customer","l":"Account"},{"p":"customer","l":"Alacarte"},{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"product","l":"Media"},{"p":"customer","l":"Student"},{"p":"customer","l":"Unlimited"}];updateSearchResults();
