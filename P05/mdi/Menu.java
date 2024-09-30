@@ -30,7 +30,17 @@ public class Menu {
 
    
     private void printMenu() {
-        System.out.println("\n--- Mavs Online Entertainment System Menu ---");
+            System.out.println("\n                __|__                ");
+            System.out.println("       --o--o--o--o--o--o--         ");
+            System.out.println("          * Mavs Online *           ");
+            System.out.println("       * Entertainment System *      ");
+            System.out.println("         *       Menu       *       ");
+            System.out.println("          * * * * * * * * * *       ");
+            System.out.println("           \\     | |     /          ");
+            System.out.println("            \\    | |    /           ");
+            System.out.println("             \\___|_|___/            ");
+        
+    
         for (int i = 0; i < menuItems.size(); i++) {
             System.out.println(i + ". " + menuItems.get(i).getLabel()); 
         }
