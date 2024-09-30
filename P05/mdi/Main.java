@@ -1,11 +1,11 @@
 package mdi;
 
 import customer.Account;
-import customer.Alacarte; // Adjust according to your actual package structure
-import customer.Student; // Adjust according to your actual package structure
+import customer.Alacarte;
+import customer.Student;
 import customer.Unlimited;
-import java.util.Scanner; // Ensure this class exists in the customer package
-import moes.Moes; // Ensure Media class exists in the product package
+import java.util.Scanner;
+import moes.Moes;
 import product.Media;
 
 public class Main {
@@ -83,13 +83,17 @@ public class Main {
         String title = scanner.nextLine();
         System.out.print("Enter media type: ");
         String type = scanner.nextLine();
-        System.out.print("Enter media duration (in minutes): "); // Added prompt for duration
+        System.out.print("Enter media duration (in minutes): ");
         int duration = Integer.parseInt(scanner.nextLine()); // Get duration from user input
-
+        System.out.print("Enter media URL: ");
+        String url = scanner.nextLine();  // Get URL from user input
+        System.out.print("Enter points required to view media: ");
+        int points = Integer.parseInt(scanner.nextLine());  // Get points required to view the media
+        
         // Create a new Media and add to Moes
-        Media media = new Media(title, type, duration); // Make sure Media constructor matches
+        Media media = new Media(title, type, duration, url, points); // Updated constructor to match new fields
         moes.addMedia(media);
-        System.out.println("Media added: " + title);
+        System.out.println("Media added: " + title + " (" + type + "), " + duration + " minutes, URL: " + url + ", Points: " + points);
     }
 
     public void listMedia() {
