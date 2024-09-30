@@ -1,11 +1,11 @@
 package moes;
 
-import customer.Student;
 import customer.Alacarte;
+import customer.Student;
 import customer.Unlimited;
-import product.Media;
 import java.util.ArrayList;
 import java.util.List;
+import product.Media;
 
 public class Moes {
     private List<Media> library = new ArrayList<>();
@@ -85,4 +85,3 @@ public class Moes {
         return student.requestMedia(media);
     }
 }
-

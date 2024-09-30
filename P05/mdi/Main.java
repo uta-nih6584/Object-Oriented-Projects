@@ -9,18 +9,17 @@ import moes.Moes;
 import product.Media;
 
 public class Main {
-    private Moes moes;  // Instance of Moes to manage media and students
-    private Menu menu;  // Instance of Menu for user interaction
-    private String output; // Stores output information
+    private Moes moes;
+    private Menu menu;
+    private String output;
 
     public Main() {
-        moes = new Moes();  // Initialize the Moes instance
-        menu = new Menu();   // Initialize the Menu instance
-        initializeMenu();    // Populate the menu with items
+        moes = new Moes();
+        menu = new Menu();
+        initializeMenu();
     }
 
     private void initializeMenu() {
-        // Add menu items with method references in the desired order
         menu.addMenuItem(new MenuItem("Exit", this::endApp));
         menu.addMenuItem(new MenuItem("Play Media", this::playMedia));
         menu.addMenuItem(new MenuItem("List Media", this::listMedia));
@@ -34,13 +33,13 @@ public class Main {
     public void mdi() {
         boolean running = true;
         while (running) {
-            menu.run(); // Prompt for user choice and execute
+            menu.run();
         }
     }
 
     public void endApp() {
         System.out.println("Exiting the application...");
-        System.exit(0); // Exit the application
+        System.exit(0);
     }
 
     public void addStudent() {
@@ -50,30 +49,28 @@ public class Main {
         System.out.print("Enter student's email: ");
         String email = scanner.nextLine();
         System.out.print("Enter student's ID: ");
-        int id = Integer.parseInt(scanner.nextLine()); // Prompt for ID
+        int id = Integer.parseInt(scanner.nextLine());
         System.out.print("Select account type (1 for Alacarte, 2 for Unlimited): ");
-        int accountType = Integer.parseInt(scanner.nextLine()); // Prompt for account type
-        
+        int accountType = Integer.parseInt(scanner.nextLine());
+
         Account account;
         if (accountType == 1) {
             System.out.print("Enter initial points for Alacarte: ");
             int points = Integer.parseInt(scanner.nextLine());
-            account = new Alacarte(points); // Create Alacarte account with initial points
+            account = new Alacarte(points);
         } else {
-            account = new Unlimited(); // Create Unlimited account
+            account = new Unlimited();
         }
-        
-        // Create a new Student and add to Moes
-        Student student = new Student(name, id, email, account); // Use the account created above
+
+        Student student = new Student(name, id, email, account);
         moes.addStudent(student);
-        
-        // Output the added student information
+
         System.out.println("Student added: [" + id + ", " + email + ", Account #" + account.getAccountNumber() + 
                            ", Points: " + (account instanceof Alacarte ? ((Alacarte) account).getPointsRemaining() : "N/A") + "]");
     }
 
     public void listStudents() {
-        output = moes.getStudentList(); // Assuming this returns a String
+        output = moes.getStudentList();
         System.out.println(output);
     }
 
@@ -84,31 +81,37 @@ public class Main {
         System.out.print("Enter media type: ");
         String type = scanner.nextLine();
         System.out.print("Enter media duration (in minutes): ");
-        int duration = Integer.parseInt(scanner.nextLine()); // Get duration from user input
+        int duration = Integer.parseInt(scanner.nextLine());
         System.out.print("Enter media URL: ");
-        String url = scanner.nextLine();  // Get URL from user input
+        String url = scanner.nextLine();
         System.out.print("Enter points required to view media: ");
-        int points = Integer.parseInt(scanner.nextLine());  // Get points required to view the media
-        
-        // Create a new Media and add to Moes
-        Media media = new Media(title, type, duration, url, points); // Updated constructor to match new fields
+        int points = Integer.parseInt(scanner.nextLine());
+
+        Media media = new Media(title, type, duration, url, points);
         moes.addMedia(media);
         System.out.println("Media added: " + title + " (" + type + "), " + duration + " minutes, URL: " + url + ", Points: " + points);
     }
 
     public void listMedia() {
-        output = moes.getMediaList(); // Assuming this returns a String
+        output = moes.getMediaList();
         System.out.println(output);
     }
 
     public void playMedia() {
+        System.out.println("Available Students:");
+        System.out.println(moes.getStudentList());
+
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter student index: ");
         int studentIndex = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Available Media:");
+        System.out.println(moes.getMediaList());
+
         System.out.print("Enter media index: ");
         int mediaIndex = Integer.parseInt(scanner.nextLine());
 
-        String result = moes.playMedia(studentIndex, mediaIndex); // Assuming this returns a String
+        String result = moes.playMedia(studentIndex, mediaIndex);
         System.out.println(result);
     }
 
@@ -117,7 +120,7 @@ public class Main {
         System.out.print("Enter student index: ");
         int studentIndex = Integer.parseInt(scanner.nextLine());
 
-        int points = moes.getPoints(studentIndex); // Assuming this returns an int
+        int points = moes.getPoints(studentIndex);
         System.out.println("Available points: " + points);
     }
 
@@ -126,7 +129,7 @@ public class Main {
         System.out.print("Enter student index: ");
         int studentIndex = Integer.parseInt(scanner.nextLine());
         int currentPoints = moes.getPoints(studentIndex);
-        
+
         System.out.println("Current points: " + currentPoints);
         System.out.print("Enter points to buy: ");
         int pointsToBuy = Integer.parseInt(scanner.nextLine());
@@ -136,12 +139,12 @@ public class Main {
             return;
         }
 
-        String result = moes.buyPoints(studentIndex, pointsToBuy); // Assuming this returns a String
+        String result = moes.buyPoints(studentIndex, pointsToBuy);
         System.out.println(result);
     }
 
     public static void main(String[] args) {
-        Main app = new Main(); // Create an instance of Main
-        app.mdi(); // Start the menu-driven interface
+        Main app = new Main();
+        app.mdi();
     }
 }
