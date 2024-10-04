@@ -4,19 +4,27 @@ import customer.Account;
 import customer.Alacarte;
 import customer.Student;
 import customer.Unlimited;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import moes.Moes;
 import product.Media;
 
 public class Main {
+    private static final String FILE_EXTENSION = ".moes"; // Define the file extension
     private Moes moes;
     private Menu menu;
     private String output;
+    private String filename; // To remember the current filename
 
     public Main() {
         moes = new Moes();
         menu = new Menu();
         initializeMenu();
+        filename = ""; // Initialize filename
     }
 
     private void initializeMenu() {
@@ -28,6 +36,10 @@ public class Main {
         menu.addMenuItem(new MenuItem("Add Media", this::addMedia));
         menu.addMenuItem(new MenuItem("List Students", this::listStudents));
         menu.addMenuItem(new MenuItem("Add Student", this::addStudent));
+        menu.addMenuItem(new MenuItem("New Moes", this::newMoes));
+        menu.addMenuItem(new MenuItem("Save", this::save));
+        menu.addMenuItem(new MenuItem("Save As", this::saveAs));
+        menu.addMenuItem(new MenuItem("Open", this::open));
     }
 
     public void mdi() {
@@ -141,6 +153,70 @@ public class Main {
 
         String result = moes.buyPoints(studentIndex, pointsToBuy);
         System.out.println(result);
+    }
+
+    // New method to create a new Moes object
+    public void newMoes() {
+        moes = new Moes();
+        System.out.println("New Moes object created.");
+    }
+
+    // Save the current Moes object to the specified filename
+    public void save() {
+        if (filename.isEmpty()) {
+            System.out.println("No filename specified. Use 'Save As' to specify a filename.");
+            return;
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write("magicCookie\n"); // Replace with your actual magic cookie
+            writer.write("fileVersion\n"); // Replace with your actual file version
+            moes.save(writer); // Assuming Moes has a save method that takes BufferedWriter
+            System.out.println("Data saved successfully to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error saving to file: " + e.getMessage());
+        }
+    }
+
+    // Save the current Moes object to a new filename
+    public void saveAs() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter new filename: ");
+        String newFilename = scanner.nextLine();
+        if (newFilename.trim().isEmpty()) {
+            System.out.println("No filename specified. Not saving anything.");
+            return;
+        }
+        if (!newFilename.endsWith(FILE_EXTENSION)) {
+            newFilename += FILE_EXTENSION; // Add the file extension if not present
+        }
+        filename = newFilename; // Update the filename
+        save(); // Call save method to save the data
+    }
+
+    // Open a Moes object from a specified filename
+    public void open() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter filename to open: ");
+        String newFilename = scanner.nextLine();
+        if (newFilename.trim().isEmpty()) {
+            System.out.println("No filename specified. Not opening anything.");
+            return;
+        }
+        if (!newFilename.endsWith(FILE_EXTENSION)) {
+            newFilename += FILE_EXTENSION; // Add the file extension if not present
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(newFilename))) {
+            String magicCookie = reader.readLine();
+            String fileVersion = reader.readLine();
+            if (!magicCookie.equals("magicCookie") || !fileVersion.equals("fileVersion")) {
+                throw new IOException("Invalid file format.");
+            }
+            moes.load(reader); // Load Moes object from stream
+            filename = newFilename; // Update the filename
+            System.out.println("Data loaded successfully from " + filename);
+        } catch (IOException e) {
+            System.out.println("Error opening file: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
