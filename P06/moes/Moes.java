@@ -3,6 +3,9 @@ package moes;
 import customer.Alacarte;
 import customer.Student;
 import customer.Unlimited;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import product.Media;
@@ -30,7 +33,6 @@ public class Moes {
     public void addStudent(Student student) {
         customers.add(student);
     }
-
 
     public String getStudentList() {
         StringBuilder menu = new StringBuilder();
@@ -83,5 +85,41 @@ public class Moes {
         Student student = customers.get(studentIndex);
         Media media = library.get(mediaIndex);
         return student.requestMedia(media);
+    }
+
+    // Method to save the state of Moes
+    public void save(BufferedWriter writer) throws IOException {
+        // Save media library size
+        writer.write(library.size() + "\n");
+        // Save each media object
+        for (Media media : library) {
+            media.save(writer);
+        }
+
+        // Save customer list size
+        writer.write(customers.size() + "\n");
+        // Save each student object
+        for (Student student : customers) {
+            student.save(writer);
+        }
+    }
+
+    // Method to load the state of Moes
+    public void load(BufferedReader reader) throws IOException {
+        // Load media library size
+        int mediaSize = Integer.parseInt(reader.readLine());
+        for (int i = 0; i < mediaSize; i++) {
+            // Create a new Media object and load its state
+            Media media = new Media(reader); // Ensure you have a constructor for loading Media
+            library.add(media);
+        }
+
+        // Load customer list size
+        int studentSize = Integer.parseInt(reader.readLine());
+        for (int i = 0; i < studentSize; i++) {
+            // Create a new Student object and load its state
+            Student student = new Student(reader); // Ensure you have a constructor for loading Student
+            customers.add(student);
+        }
     }
 }
