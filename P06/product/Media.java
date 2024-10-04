@@ -1,5 +1,9 @@
 package product;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+
 /**
  * Represents a media item with a title, URL, and associated points.
  * 
@@ -31,6 +35,36 @@ public class Media {
         this.duration = duration;
         this.url = url;
         this.points = points;
+    }
+
+    /**
+     * Constructs a Media object by reading from a BufferedReader.
+     * 
+     * @param br The BufferedReader used to read the media item.
+     * @throws IOException If an I/O error occurs during reading.
+     * @since 1.0
+     */
+    public Media(BufferedReader br) throws IOException {
+        this.title = br.readLine();
+        this.type = br.readLine();
+        this.duration = Integer.parseInt(br.readLine());
+        this.url = br.readLine();
+        this.points = Integer.parseInt(br.readLine());
+    }
+
+    /**
+     * Saves the media item to a file using the provided BufferedWriter.
+     * 
+     * @param bw The BufferedWriter used to write the media item.
+     * @throws IOException If an I/O error occurs during writing.
+     * @since 1.0
+     */
+    public void save(BufferedWriter bw) throws IOException {
+        bw.write(title + '\n');
+        bw.write(type + '\n');
+        bw.write(Integer.toString(duration) + '\n');
+        bw.write(url + '\n');
+        bw.write(Integer.toString(points) + '\n');
     }
 
     /**
