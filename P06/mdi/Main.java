@@ -56,54 +56,109 @@ public class Main {
 
     public void addStudent() {
         Scanner scanner = new Scanner(System.in);
+        
         System.out.print("Enter student's name: ");
         String name = scanner.nextLine();
+        if (name.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+        
         System.out.print("Enter student's email: ");
         String email = scanner.nextLine();
+        if (email.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+    
         System.out.print("Enter student's ID: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        String idInput = scanner.nextLine();
+        if (idInput.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+        int id = Integer.parseInt(idInput);
+    
         System.out.print("Select account type (1 for Alacarte, 2 for Unlimited): ");
-        int accountType = Integer.parseInt(scanner.nextLine());
-
+        String accountTypeInput = scanner.nextLine();
+        if (accountTypeInput.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+        int accountType = Integer.parseInt(accountTypeInput);
+    
         Account account;
         if (accountType == 1) {
             System.out.print("Enter initial points for Alacarte: ");
-            int points = Integer.parseInt(scanner.nextLine());
+            String pointsInput = scanner.nextLine();
+            if (pointsInput.trim().isEmpty()) {
+                System.out.println("Operation canceled. Returning to the main menu.");
+                return; // Exit if input is empty
+            }
+            int points = Integer.parseInt(pointsInput);
             account = new Alacarte(points);
         } else {
             account = new Unlimited();
         }
-
+    
         Student student = new Student(name, id, email, account);
         moes.addStudent(student);
-
+    
         System.out.println("Student added: [" + id + ", " + email + ", Account #" + account.getAccountNumber() + 
                            ", Points: " + (account instanceof Alacarte ? ((Alacarte) account).getPointsRemaining() : "N/A") + "]");
     }
-
+    
     public void listStudents() {
         output = moes.getStudentList();
         System.out.println(output);
     }
 
+    
     public void addMedia() {
         Scanner scanner = new Scanner(System.in);
+        
         System.out.print("Enter media title: ");
         String title = scanner.nextLine();
+        if (title.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+        
         System.out.print("Enter media type: ");
         String type = scanner.nextLine();
+        if (type.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+    
         System.out.print("Enter media duration (in minutes): ");
-        int duration = Integer.parseInt(scanner.nextLine());
+        String durationInput = scanner.nextLine();
+        if (durationInput.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+        int duration = Integer.parseInt(durationInput);
+    
         System.out.print("Enter media URL: ");
         String url = scanner.nextLine();
+        if (url.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+    
         System.out.print("Enter points required to view media: ");
-        int points = Integer.parseInt(scanner.nextLine());
-
+        String pointsInput = scanner.nextLine();
+        if (pointsInput.trim().isEmpty()) {
+            System.out.println("Operation canceled. Returning to the main menu.");
+            return; // Exit if input is empty
+        }
+        int points = Integer.parseInt(pointsInput);
+    
         Media media = new Media(title, type, duration, url, points);
         moes.addMedia(media);
         System.out.println("Media added: " + title + " (" + type + "), " + duration + " minutes, URL: " + url + ", Points: " + points);
     }
-
+    
     public void listMedia() {
         output = moes.getMediaList();
         System.out.println(output);
