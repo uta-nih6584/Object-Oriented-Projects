@@ -1,15 +1,14 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-import java.util.List;
 import java.util.ArrayList;
-
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.HashSet;
-
-import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Boggle {
     private static List<Board> boards = new ArrayList<>();
@@ -21,9 +20,18 @@ public class Boggle {
     private static int numThreads = 1;     // default is to use a single thread
     private static String filename = "words.txt"; // default (this is the supplied file of 971 common words)
     private static int verbosity = 0;   // smaller ints mean less output - us 0 for timing
-    
+
     // =========== WRITE AND INVOKE THIS METHOD FOR EACH THREAD ===========
     private static void solveRange(int first, int lastPlusOne, int threadNumber) {
+        // Create a solver for each board
+        for (int i = first; i < lastPlusOne; i++) {
+            Board board = boards.get(i);
+            Solver solver = new Solver(board, threadNumber, verbosity);
+            for (String word : words) {
+                Solution solution = solver.solve(word);
+                if (solution != null) solutions.add(solution);
+            }
+        }
     }
     // =========== END THREAD METHOD ===========
 
@@ -63,7 +71,6 @@ public class Boggle {
                     System.err.println("Unable to generate new Boggle boards: " + e);
                     System.exit(-2);
             }
-            // System.exit(0);
         
             // Read the list of words to find on the Boggle Boards
             String s = null;
@@ -75,15 +82,27 @@ public class Boggle {
             }
             
             // =========== CHANGE THIS BLOCK OF CODE TO ADD THREADING ===========
-            // Find words on the Boggle boards, collecting the solutions in a TreeSet
-            int threadNumber = 0; // This will be set to a unique int for each of your threads
-            for(Board board : boards) {
-                Solver solver = new Solver(board, threadNumber, verbosity);
-                for(String word : words) {
-                    Solution solution = solver.solve(word);
-                    if(solution != null) solutions.add(solution);
+            // Use an ExecutorService to manage threads
+            ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+            List<Future<?>> futures = new ArrayList<>();
+
+            // Determine the range of boards each thread will handle
+            int boardsPerThread = (int) Math.ceil((double) numberOfBoards / numThreads);
+            for (int i = 0; i < numThreads; i++) {
+                int first = i * boardsPerThread;
+                int lastPlusOne = Math.min(first + boardsPerThread, numberOfBoards);
+                if (first < numberOfBoards) {
+                    final int threadNumber = i;
+                    futures.add(executor.submit(() -> solveRange(first, lastPlusOne, threadNumber)));
                 }
             }
+
+            // Wait for all threads to finish
+            for (Future<?> future : futures) {
+                future.get(); // This will block until the future is done
+            }
+
+            executor.shutdown(); // Shutdown the executor service
             // =========== END BLOCK OF CODE TO ADD THREADING ===========
 
             // Print all the solutions if requested
@@ -104,6 +123,4 @@ public class Boggle {
     private static void log(String s, int level) {
         if(verbosity == level) System.out.println(s);
     }
-    
-
 }
