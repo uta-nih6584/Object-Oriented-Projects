@@ -3,6 +3,19 @@
 #include <cstdlib>
 #include <thread>
 #include <chrono>
+#include <atomic>
+
+std::atomic<bool> running(true);
+
+void inputThread() {
+    std::string input;
+    while (running) {
+        std::getline(std::cin, input);
+        if (input == "q") {
+            running = false;
+        }
+    }
+}
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
@@ -18,16 +31,16 @@ int main(int argc, char* argv[]) {
 
         std::cout << "Enter 'q' to quit:" << std::endl;
 
-        while (true) {
+        std::thread t(inputThread); // Start the input thread
+
+        while (running) {
             clock.print();
-            if (std::cin.rdbuf()->in_avail() > 0) {
-                std::string input;
-                std::getline(std::cin, input);
-                if (input == "q") break;
-            }
+            std::cout << std::flush;
             clock.tic();
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
+
+        t.join(); // Wait for the input thread to finish
     } catch (const std::out_of_range& e) {
         std::cerr << e.what() << std::endl;
         return -2;
