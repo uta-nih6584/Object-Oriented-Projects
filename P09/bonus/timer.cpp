@@ -1,7 +1,7 @@
 #include "timer.h"
 
 void Timer::tic() {
-    _seconds--;
+    _seconds--; // Decrement seconds
     if (_seconds < 0) {
         _seconds = 59;
         _minutes--;
@@ -9,7 +9,7 @@ void Timer::tic() {
             _minutes = 59;
             _hours--;
             if (_hours < 0) {
-                throw std::runtime_error("Timer expired");
+                throw std::runtime_error("Timer expired"); // Throw exception when timer expires
             }
         }
     }

@@ -5,17 +5,17 @@
 #include <stdexcept>
 
 class Clock {
-protected:
+protected:  // Protected to allow derived classes access
     int _hours;
     int _minutes;
     int _seconds;
 
 public:
-    Clock(int hours, int minutes, int seconds);
-    virtual ~Clock() = default;
+    Clock(int hours, int minutes, int seconds); // Constructor
+    virtual ~Clock() {} // Virtual destructor
 
-    void tic();
-    void print() const;
+    virtual void tic(); // Virtual method for ticking the clock
+    void print() const; // Print the current time
 };
 
-#endif
+#endif // CLOCK_H

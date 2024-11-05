@@ -7,9 +7,9 @@
 class Timer : public Clock {
 public:
     Timer(int hours, int minutes, int seconds) : Clock(hours, minutes, seconds) {}
-    virtual ~Timer() {}
+    virtual ~Timer() {} // Virtual destructor
 
-    void tic() override;
+    void tic() override; // Override the tic function
 };
 
 #endif // TIMER_H
