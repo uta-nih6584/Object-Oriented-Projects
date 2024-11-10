@@ -25,6 +25,8 @@ int main() {
 
         Purse account(pounds, shillings, pence);
         vault[accountName] = account;
+
+        std::cout << "Account " << accountName << " created with " << account << ".\n";
     }
 
     // Initialize a default Purse object to hold the total balance

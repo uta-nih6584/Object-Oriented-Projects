@@ -6,13 +6,13 @@ Purse::Purse(int pounds, int shillings, int pence)
 }
 
 void Purse::rationalize() {
-    if (_pence >= 20) {
-        _shillings += _pence / 20;
-        _pence %= 20;
+    if (_pence >= 12) {
+        _shillings += _pence / 12;
+        _pence %= 12;
     }
-    if (_shillings >= 12) {
-        _pounds += _shillings / 12;
-        _shillings %= 12;
+    if (_shillings >= 20) {
+        _pounds += _shillings / 20;
+        _shillings %= 20;
     }
 }
 
