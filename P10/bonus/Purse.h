@@ -2,25 +2,37 @@
 #define PURSE_H
 
 #include <iostream>
+#include <compare>
 
 class Purse {
 private:
-    int _pounds;
-    int _shillings;
-    int _pence;
+    int _pence;   
+    int _shillings;  
+    int _pounds;  
 
     void rationalize();
 
 public:
+   
     Purse(int pounds = 0, int shillings = 0, int pence = 0);
-    
-    // Friend functions for I/O
+
     friend std::ostream& operator<<(std::ostream& os, const Purse& purse);
     friend std::istream& operator>>(std::istream& is, Purse& purse);
+    
+    std::strong_ordering operator<=>(const Purse& other) const;
+
+    Purse& operator++(); 
+    Purse operator++(int); 
+
+    Purse operator+(const Purse& other) const;
+    Purse operator-(const Purse& other) const;
 
     Purse& operator+=(const Purse& other);
-    // Other member functions and operators...
+    Purse& operator-=(const Purse& other);
+
+    int getPounds() const { return _pounds; }
+    int getShillings() const { return _shillings; }
+    int getPence() const { return _pence; }
 };
 
-#endif // PURSE_H
-
+#endif 
