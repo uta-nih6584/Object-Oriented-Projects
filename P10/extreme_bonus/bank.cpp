@@ -1,4 +1,3 @@
-// bank.cpp
 #include <iostream>
 #include <map>
 #include <string>
@@ -27,7 +26,7 @@ int main() {
         std::cin.ignore();
 
         if (!std::cin) {
-            std::cerr << "Invalid input format. Please enter the amount as £ pounds shillings pence.\n";
+            std::cerr << "Invalid input format. Please enter the amount as £<pounds> <shillings>s<pence>d.\n";
             return 1;
         }
 
@@ -37,7 +36,7 @@ int main() {
 
     // Calculate total and display each account
     Purse total;
-    std::cout << "\nAccount List\n二二\n";
+    std::cout << "\nAccount List\n";
     for (const auto& [accountName, account] : vault) {
         std::cout << accountName << " with " << account << "\n";
         total += account;
@@ -48,4 +47,3 @@ int main() {
 
     return 0;
 }
-
