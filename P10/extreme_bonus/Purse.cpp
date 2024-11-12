@@ -79,3 +79,15 @@ Purse& Purse::operator+=(const Purse& other) {
     rationalize();  // Normalize values after addition
     return *this;
 }
+
+// Implement the subscript operator to return appropriate values based on the string key
+int Purse::operator[](const std::string& subscript) const {
+    if (subscript == "£") {
+        return _pounds;  // Return pounds for the pound symbol
+    } else if (subscript == "s") {
+        return _shillings;  // Return shillings for "s"
+    } else if (subscript == "d") {
+        return _pence;  // Return pence for "d"
+    }
+    throw std::invalid_argument("Invalid subscript. Use '£', 's', or 'd'.");  // Handle invalid subscript
+}
