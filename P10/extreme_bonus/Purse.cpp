@@ -2,33 +2,35 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <limits>
 
-// Initialize the static pound symbol as a standard UTF-8 encoded string
-const std::string Purse::pound_utf8 = "\u00A3";  // UTF-8 pound symbol £
+// Initialize the static constant for the pound symbol
+const std::string Purse::pound_utf8 = "£";
 
-Purse::Purse(int pounds, int shillings, int pence)
-    : _pounds(pounds), _shillings(shillings), _pence(pence) {
-    rationalize();  // Ensure values are valid (e.g., pence < 12, shillings < 20)
+// Constructor
+Purse::Purse(int pounds, int shillings, int pence) : _pounds(pounds), _shillings(shillings), _pence(pence) {
+    rationalize();  // Make sure the money is rationalized
 }
 
+// Rationalize the purse to ensure pence and shillings are within valid ranges
 void Purse::rationalize() {
     if (_pence >= 12) {
         _shillings += _pence / 12;
-        _pence %= 12;
+        _pence = _pence % 12;
     }
     if (_shillings >= 20) {
         _pounds += _shillings / 20;
-        _shillings %= 20;
+        _shillings = _shillings % 20;
     }
 }
 
-// Overload << operator to output in the £ format
+// Overload the output stream operator to print the purse in a human-readable format
 std::ostream& operator<<(std::ostream& os, const Purse& purse) {
     os << Purse::pound_utf8 << purse._pounds << " " << purse._shillings << "s " << purse._pence << "d";
     return os;
 }
 
-// Overload >> operator to input using £ format and rationalize after reading
+// Overload the input stream operator to read input in the format £<pounds> <shillings>s<pence>d
 std::istream& operator>>(std::istream& is, Purse& purse) {
     std::string inputLine;
     std::getline(is, inputLine);  // Read the full line input
@@ -41,7 +43,9 @@ std::istream& operator>>(std::istream& is, Purse& purse) {
     if (inputLine.substr(0, 2) != Purse::pound_utf8) {
         is.setstate(std::ios::failbit);  // Set failbit if pound symbol is missing
         std::cerr << "Invalid input format. Please enter the amount as £<pounds> <shillings>s<pence>d.\n";
-        return is;
+        is.clear();  // Clear error state
+        is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Ignore bad input
+        return is;  // Return immediately to prompt again
     }
 
     // Remove the pound symbol from the string
@@ -57,7 +61,9 @@ std::istream& operator>>(std::istream& is, Purse& purse) {
         sChar != 's' || dChar != 'd') {
         is.setstate(std::ios::failbit);  // Set failbit if anything is wrong
         std::cerr << "Invalid input format. Please enter the amount as £<pounds> <shillings>s<pence>d.\n";
-        return is;
+        is.clear();  // Clear error state
+        is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Ignore bad input
+        return is;  // Return immediately to prompt again
     }
 
     // Set values in purse object
@@ -71,23 +77,60 @@ std::istream& operator>>(std::istream& is, Purse& purse) {
     return is;
 }
 
-// Overload += to add balances correctly
+// Overload the comparison operator for <=> (spaceship operator)
+std::strong_ordering Purse::operator<=>(const Purse& other) const {
+    if (_pounds != other._pounds) return _pounds <=> other._pounds;
+    if (_shillings != other._shillings) return _shillings <=> other._shillings;
+    return _pence <=> other._pence;
+}
+
+// Overload the increment operator (prefix)
+Purse& Purse::operator++() {
+    ++_pence;
+    rationalize();  // Make sure the purse is rationalized
+    return *this;
+}
+
+// Overload the increment operator (postfix)
+Purse Purse::operator++(int) {
+    Purse temp = *this;
+    ++(*this);  // Use the prefix increment to do the work
+    return temp;
+}
+
+// Overload the addition operator
+Purse Purse::operator+(const Purse& other) const {
+    return Purse(_pounds + other._pounds, _shillings + other._shillings, _pence + other._pence);
+}
+
+// Overload the subtraction operator
+Purse Purse::operator-(const Purse& other) const {
+    return Purse(_pounds - other._pounds, _shillings - other._shillings, _pence - other._pence);
+}
+
+// Overload the compound addition operator
 Purse& Purse::operator+=(const Purse& other) {
     _pounds += other._pounds;
     _shillings += other._shillings;
     _pence += other._pence;
-    rationalize();  // Normalize values after addition
+    rationalize();  // Rationalize after addition
     return *this;
 }
 
-// Implement the subscript operator to return appropriate values based on the string key
-int Purse::operator[](const std::string& subscript) const {
-    if (subscript == "£") {
-        return _pounds;  // Return pounds for the pound symbol
-    } else if (subscript == "s") {
-        return _shillings;  // Return shillings for "s"
-    } else if (subscript == "d") {
-        return _pence;  // Return pence for "d"
-    }
-    throw std::invalid_argument("Invalid subscript. Use '£', 's', or 'd'.");  // Handle invalid subscript
+// Overload the compound subtraction operator
+Purse& Purse::operator-=(const Purse& other) {
+    _pounds -= other._pounds;
+    _shillings -= other._shillings;
+    _pence -= other._pence;
+    rationalize();  // Rationalize after subtraction
+    return *this;
 }
+
+// Subscript operator to access values based on string key
+int Purse::operator[](const std::string& key) const {
+    if (key == "pounds") return _pounds;
+    if (key == "shillings") return _shillings;
+    if (key == "pence") return _pence;
+    throw std::invalid_argument("Invalid key for accessing Purse values.");
+}
+
