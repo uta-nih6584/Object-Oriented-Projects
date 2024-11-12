@@ -18,7 +18,7 @@ int main() {
     // Loop to get account details
     for (int i = 0; i < numAccounts; ++i) {
         std::string accountName;
-        std::cout << "Name account " << i << ": ";
+        std::cout << "Name Account " << i << ": ";
         std::getline(std::cin, accountName);
 
         Purse account;
