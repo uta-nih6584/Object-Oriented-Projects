@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include <map>
+#include <limits>
 #include "date.h"
 
 typedef double Temp;
@@ -44,46 +45,68 @@ int main(int argc, char* argv[]) {
         temps[date] = std::stod(temp);
     }
 
-    // Main loop
+    // Main loop for querying the temperature data
     while (true) {
-        std::cout << "Enter start date (year month day): ";
-        int startYear, startMonth, startDay;
-        
-        // Check for failure in input, exit if invalid input
-        if (!(std::cin >> startYear >> startMonth >> startDay)) {
-            break;  // Exit the loop on invalid input
+        // Read the start date
+        std::cout << "Enter start date (YYYY/MM/DD): ";
+        std::string startInput;
+        std::getline(std::cin, startInput);
+
+        // If user wants to quit, break the loop
+        if (startInput == "q") {
+            std::cout << "Exiting program...\n";
+            break;
         }
 
-        std::cout << "Enter end date (year month day): ";
-        int endYear, endMonth, endDay;
-        
-        // Check for failure in input, exit if invalid input
-        if (!(std::cin >> endYear >> endMonth >> endDay)) {
-            break;  // Exit the loop on invalid input
+        std::istringstream startStream(startInput);
+        Date startDate;
+
+        // Check if the input is valid before trying to parse as a Date
+        if (!(startStream >> startDate)) {
+            std::cerr << "Invalid start date format. Please try again.\n";
+            continue;  // Restart the loop if the input is invalid
         }
 
-        Date startDate(startYear, startMonth, startDay);
-        Date endDate(endYear, endMonth, endDay);
-
-        // Check if the start date exists in the map
-        if (temps.find(startDate) == temps.end()) {
-            std::cout << startDate << " is not in the database!\n";
-            continue;  // Restart the loop after showing the message
+        // Check if the start date is in the map
+        auto it = temps.find(startDate);
+        if (it == temps.end()) {
+            std::cerr << startDate << " is not in the database!\n";
+            continue;  // Restart the loop if the start date is not found
         }
 
-        // Check if the end date exists in the map
-        if (temps.find(endDate) == temps.end()) {
-            std::cout << endDate << " is not in the database!\n";
-            continue;  // Restart the loop after showing the message
+        // Read the end date
+        std::cout << "Enter end date (YYYY/MM/DD): ";
+        std::string endInput;
+        std::getline(std::cin, endInput);
+
+        // If user wants to quit, break the loop
+        if (endInput == "q") {
+            std::cout << "Exiting program...\n";
+            break;
         }
 
-        // Iterate through the map
+        std::istringstream endStream(endInput);
+        Date endDate;
+
+        // Check if the input is valid before trying to parse as a Date
+        if (!(endStream >> endDate)) {
+            std::cerr << "Invalid end date format. Please try again.\n";
+            continue;  // Restart the loop if the input is invalid
+        }
+
+        if (endDate < startDate) {
+            std::cerr << endDate << " is earlier than " << startDate << ". Please try again.\n";
+            continue;  // Restart the loop if the end date is earlier than the start date
+        }
+
+        // Iterate through the map, starting at the first date and stopping at the last date
         std::cout << "\nDate        Temperature (°F)\n";
         std::cout << "-------------------------------\n";
 
         for (auto it = temps.lower_bound(startDate); it != temps.end() && it->first <= endDate; ++it) {
             std::cout << it->first << "  " << std::fixed << std::setprecision(1) << it->second << '\n';
         }
+
         std::cout << std::endl;
     }
 
