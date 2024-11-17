@@ -21,7 +21,7 @@ public:
     inline bool operator> (const Date& rhs) const { return (compare(rhs) >  0); }
     inline bool operator>=(const Date& rhs) const { return (compare(rhs) >= 0); }
 
-    // Friend function to print Date in YYYY/MM/DD format
+    // Friend function to print Date 
     friend std::ostream& operator<<(std::ostream& os, const Date& date) {
         char old_fill = os.fill('0');
         os << date._year << '/'
