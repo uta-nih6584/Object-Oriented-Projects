@@ -46,11 +46,11 @@ int main(int argc, char* argv[]) {
 
     // Main loop
     while (std::cin) {
-        std::cout << "Enter start date (YYYY MM DD): ";
+        std::cout << "Enter start date (year month day): ";
         int startYear, startMonth, startDay;
         if (!(std::cin >> startYear >> startMonth >> startDay)) break;
 
-        std::cout << "Enter end date (YYYY MM DD): ";
+        std::cout << "Enter end date (year month day): ";
         int endYear, endMonth, endDay;
         if (!(std::cin >> endYear >> endMonth >> endDay)) break;
 
