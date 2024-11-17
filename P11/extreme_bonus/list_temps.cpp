@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include <map>
+#include <limits>
 #include "date.h"
 
 typedef double Temp;
@@ -48,26 +49,49 @@ int main(int argc, char* argv[]) {
     while (true) {
         // Read the start date
         std::cout << "Enter start date (YYYY/MM/DD): ";
-        Date startDate;
-        std::cin >> startDate;
+        std::string startInput;
+        std::getline(std::cin, startInput);
 
-        if (std::cin.fail()) {
+        // If user wants to quit, break the loop
+        if (startInput == "q") {
+            std::cout << "Exiting program...\n";
+            break;
+        }
+
+        std::istringstream startStream(startInput);
+        Date startDate;
+
+        // Check if the input is valid before trying to parse as a Date
+        if (!(startStream >> startDate)) {
             std::cerr << "Invalid start date format. Please try again.\n";
-            std::cin.clear();  // Clear the error flag
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Ignore incorrect input
             continue;  // Restart the loop if the input is invalid
+        }
+
+        // Check if the start date is in the map
+        auto it = temps.find(startDate);
+        if (it == temps.end()) {
+            std::cerr << startDate << " is not in the database!\n";
+            continue;  // Restart the loop if the start date is not found
         }
 
         // Read the end date
         std::cout << "Enter end date (YYYY/MM/DD): ";
-        Date endDate;
-        std::cin >> endDate;
+        std::string endInput;
+        std::getline(std::cin, endInput);
 
-        if (std::cin.fail()) {
+        // If user wants to quit, break the loop
+        if (endInput == "q") {
+            std::cout << "Exiting program...\n";
+            break;
+        }
+
+        std::istringstream endStream(endInput);
+        Date endDate;
+
+        // Check if the input is valid before trying to parse as a Date
+        if (!(endStream >> endDate)) {
             std::cerr << "Invalid end date format. Please try again.\n";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
+            continue;  // Restart the loop if the input is invalid
         }
 
         if (endDate < startDate) {
@@ -79,15 +103,8 @@ int main(int argc, char* argv[]) {
         std::cout << "\nDate        Temperature (°F)\n";
         std::cout << "-------------------------------\n";
 
-        auto it = temps.find(startDate);
-        if (it == temps.end()) {
-            // If the start date is not found, print a message and continue
-            std::cout << startDate << " is not in the database!\n";
-        } else {
-            // Iterate until we find a date greater than the end date
-            for (; it != temps.end() && it->first <= endDate; ++it) {
-                std::cout << it->first << "  " << std::fixed << std::setprecision(1) << it->second << '\n';
-            }
+        for (auto it = temps.lower_bound(startDate); it != temps.end() && it->first <= endDate; ++it) {
+            std::cout << it->first << "  " << std::fixed << std::setprecision(1) << it->second << '\n';
         }
 
         std::cout << std::endl;
