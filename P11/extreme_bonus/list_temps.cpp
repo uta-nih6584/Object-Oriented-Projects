@@ -61,10 +61,10 @@ int main(int argc, char* argv[]) {
         std::istringstream startStream(startInput);
         Date startDate;
 
-        // Check if the input is valid before trying to parse as a Date
+        // If input fails to be converted to a Date, exit the program immediately
         if (!(startStream >> startDate)) {
-            std::cerr << "Invalid start date format. Please try again.\n";
-            continue;  // Restart the loop if the input is invalid
+            std::cerr << "Invalid start date format. Exiting program...\n";
+            return 1;  // Exit the program on invalid input
         }
 
         // Check if the start date is in the map
@@ -88,12 +88,13 @@ int main(int argc, char* argv[]) {
         std::istringstream endStream(endInput);
         Date endDate;
 
-        // Check if the input is valid before trying to parse as a Date
+        // If input fails to be converted to a Date, exit the program immediately
         if (!(endStream >> endDate)) {
-            std::cerr << "Invalid end date format. Please try again.\n";
-            continue;  // Restart the loop if the input is invalid
+            std::cerr << "Invalid end date format. Exiting program...\n";
+            return 1;  // Exit the program on invalid input
         }
 
+        // If end date is earlier than start date, prompt user to try again
         if (endDate < startDate) {
             std::cerr << endDate << " is earlier than " << startDate << ". Please try again.\n";
             continue;  // Restart the loop if the end date is earlier than the start date
