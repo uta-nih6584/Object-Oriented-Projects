@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
         Date endDate(endYear, endMonth, endDay);
 
         // Iterate through the map
-        std::cout << "\nDate          Temperature (°F)\n";
+        std::cout << "\nDate        Temperature (°F)\n";
         std::cout << "-------------------------------\n";
 
         for (auto it = temps.lower_bound(startDate); it != temps.end() && it->first <= endDate; ++it) {
@@ -69,4 +69,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
